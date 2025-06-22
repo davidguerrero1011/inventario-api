@@ -16,7 +16,7 @@ class ProductsRepository
     public function index()
     {
         try {
-            return Products::with('category')->get();
+            return Products::with('category')->paginate(10);
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

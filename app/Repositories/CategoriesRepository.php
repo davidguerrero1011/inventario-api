@@ -15,7 +15,7 @@ class CategoriesRepository
      */
     public function index()
     {
-        return Categories::all();
+        return Categories::paginate(10);
     }
 
     /**

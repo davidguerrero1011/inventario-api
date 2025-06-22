@@ -34,6 +34,7 @@ class AuthController extends Controller
             'role.in'            => 'Para el rol solo puede ser tipo admin o usuario'
         ]);
 
+        // Si el usuario esta logueado y es admin, puedo crear el usuario con el rol que desee, de lo contrario sera user
         $role = auth()->check() && auth()->user()->role === 'admin' ? $request->input('role', 'user') : 'user';
         $user = User::create([
             'name'     => $request->name,
