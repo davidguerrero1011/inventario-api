@@ -1,66 +1,147 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API de gestion de inventario simple con roles
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+API RESTful para gestión de productos y categorías, desarrollada en Laravel 10 con autenticación por Sanctum, autorización por roles, buenas prácticas de diseño y arquitectura desacoplada usando Service Layer y Repository Pattern.
 
-## About Laravel
+## 🧰 Tecnologías utilizadas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.1.10
+- Laravel 10.48.29
+- MySQL
+- Sanctum (auth)
+- Postman (pruebas)
+- Repositorios y servicios (Service & Repository pattern)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📦 Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.1+
+- Laravel 10+
+- Composer
+- MySQL o MariaDB
+- Laravel CLI (`composer global require laravel/installer`)
 
-## Learning Laravel
+## ⚙️ Configuración local
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/davidguerrero1011/inventario-api.git
+   cd inventario-api
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+2. Instalar dependencias:
+   ```bash
+   composer install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. Copiar el archivo `.env` y configurarlo: (Esto en la raiz del proyecto)
+   ```si es Linux o Mac:
+   cp .env.example .env
 
-## Laravel Sponsors
+   ```si es Windows:
+   copy .env.example .env
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. Generar la clave de la aplicación:
+   ```bash
+   php artisan key:generate
 
-### Premium Partners
+5. Crear una base de datos y configurar los datos en `.env`:
+   ```env
+   DB_DATABASE=inventario_api
+   DB_USERNAME=root
+   DB_PASSWORD=tu_password
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+6. Ejecutar migraciones y seeders:
+   ```bash
+   php artisan migrate --seed
+   ``` Si no se ha ejecutado el seeder GeneralAdminUserSeeder que inserta un usuario admin, debera correr el seeder
+       php artisan db:seed --class=GeneralAdminUserSeeder
 
-## Contributing
+7. Iniciar el servidor:
+   ```bash
+   php artisan serve
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## 🔐 Variables de entorno importantes
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Asegúrate de definir estas variables en `.env`:
 
-## Security Vulnerabilities
+```env
+APP_NAME=inventario-api
+APP_URL=http://localhost:8000
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventario-api
+DB_USERNAME=root
+DB_PASSWORD=
 
-## License
+SANCTUM_STATEFUL_DOMAINS=localhost:8000
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 📌 Importar colección de Postman:
+
+a. Abre Postman
+b. En las opciones, sea del menu superior o en la imagen de hamburguesa, opción File.
+c. Seleccionamos `Import`.
+d. Buscamos el json en la opcion de seleccionar archivos.
+e. Buscamos el archivo en la ubicacion donde este ubicado.
+
+3. Establece el token de autenticación como tipo *Bearer Token* al probar endpoints protegidos, el bearer toker lo obtiene con el 
+   archivo User Login de la coleccion, solamente debe pasarle en el cuerpo el correo y la contraseña.
+
+
+## 🌍 Despliegue público
+
+Puedes acceder al backend desplegado en:  
+🔗 **[https://inventario-api.onrender.com](https://inventario-api.onrender.com)**
+
+
+## 🧠 Decisiones de diseño
+### ✅ Enum vs Tabla de roles
+
+- Se usó un **enum directamente en el modelo** mediante un campo `role` (`admin`, `user`) en la tabla `users`, sin una tabla `roles`,
+  porque solo hay 2 tipos y no se requiere una gestión dinámica compleja, mas sin embargo si los roles llegan a crecer se aconseja eliminar el campo roles de la tabla users y crear la tabla para los roles, con esto tendremos totalmente normalizada la base de datos.
+
+### ✅ Middleware de autorización personalizado
+
+```php
+'role' => \App\Http\Middleware\CheckRole::class,
+
+Se implementó un **middleware `CheckRole`** para restringir rutas por rol (ej. `'role:admin'`), evitando depender de paquetes externos y manteniendo control completo sobre la lógica.
+
+### ✅ Cambios realizados sobre el esquema de Base de Datos original:
+
+- Se añadió campo `role` al modelo `User`.
+- Se crearon migraciones personalizadas para:
+  - Tabla `categories` con `name`, `description`.
+  - Tabla `products` con `category_id`, `name`, `description`, `price`, `stock`.
+- Se creo seeder GeneralAdminUserSeeder para registrar el primer usuario tipo admin, ya que la ruta de registrar usuarios esta protegida
+  en el middleware de sanctum
+
+### ✅ Arquitectura
+
+- Separación en capas:
+  - **Controladores**
+  - **Requests personalizados (FormRequest)**
+  - **Recursos (`JsonResource`)**
+  - **Servicios (`Services`)**
+  - **Repositorios (`Repositories`)**
+- Uso de validaciones personalizadas, control de errores con `try/catch`, respuestas uniformes.
+- Solamente se dejo validacion de form request en controlador en el metodo login que valida credenciales.
+
+## 🔗 Repositorio público
+
+Todo el código fuente está disponible en GitHub:  
+👉 **[https://github.com/davidguerrero1011/inventario-api]**
+
+---
+
+## ✉️ Contacto
+
+Wilmar David Macias Guerrero  
+📧 davidguerrero0709@gmail.com  
+🔗 [GitHub: davidguerrero1011](https://github.com/davidguerrero1011)
+
+---
+
+## 📝 Licencia
+
+MIT License. Libre para usar, estudiar y modificar.
