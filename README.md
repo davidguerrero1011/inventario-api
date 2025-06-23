@@ -91,7 +91,7 @@ e. Buscamos el archivo en la ubicacion donde este ubicado.
 ## 🌍 Despliegue público
 
 Puedes acceder al backend desplegado en:  
-🔗 **[https://inventario-api.onrender.com](https://inventario-api.onrender.com)**
+🔗 **[http://44.206.233.215]**
 
 
 ## 🧠 Decisiones de diseño
